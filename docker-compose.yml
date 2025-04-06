@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: user_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"       # RabbitMQ protocol
+      - "15672:15672"     # RabbitMQ Management UI
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025"       # SMTP
+      - "8025:8025"       # Web UI to see emails
+
+  user_service:
+    build: ./user_service
+    container_name: user_service
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:password@postgres:5432/user_db
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+    ports:
+      - "8000:8000"
+    command: uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+
+  notification_service:
+    build: ./notification_service
+    container_name: notification_service
+    depends_on:
+      - rabbitmq
+      - mailhog
+    environment:
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
+      SMTP_USER: ""
+      SMTP_PASSWORD: ""
+      EMAIL_FROM: no-reply@example.com
+
+volumes:
+  postgres_data:

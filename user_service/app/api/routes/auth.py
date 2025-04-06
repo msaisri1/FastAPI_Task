@@ -24,14 +24,6 @@ def login(user_in: UserCreate, db: Session = Depends(get_db)):
     token = create_access_token({"sub": user.email, "role": user.role})
     return {"access_token": token, "token_type":"bearer"}
 
-# @router.get("/me", response_model=UserOut)
-# def get_profile(current_user=Depends(get_current_user)):
-#     return current_user
-
-# @router.put("/me", response_model=UserOut)
-# def update_profile(user_update: UserUpdate, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
-#     return(update_user(db, current_user, user_update))
-
 @router.get("/admin", dependencies=[Depends(role_required("admin"))])
 def admin_only():
     return {"msg": "You are an admin"}
