@@ -1,4 +1,3 @@
-from loguru import logger
 import smtplib
 from email.message import EmailMessage
 
@@ -16,7 +15,3 @@ def send_email(email, full_name):
     except Exception as e:
         print(f"Failed to send email to {email}: {e}")
 
-
-def send_notification(user_data:dict):
-    send_email(user_data['email'], user_data['full_name'])
-    logger.info(f"Sending mock email to user: {user_data['email']}")
