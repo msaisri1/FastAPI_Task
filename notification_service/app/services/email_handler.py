@@ -2,15 +2,15 @@ import smtplib
 from email.message import EmailMessage
 import os
 
-SMTP_HOST = os.getenv("SMTP_HOST", "localhost")
-SMTP_PORT = int(os.getenv("SMTP_PORT", 25))
+SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
 SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASS = os.getenv("SMTP_PASS", "")
 
 def send_email(email, full_name):
     msg = EmailMessage()
     msg["Subject"] = "Welcome to Our App!"
-    msg["From"] = "noreply@example.com"
+    msg["From"] = "saisri@gmail.com"
     msg["To"] = email
     msg.set_content(f"Hello {full_name},\n\nThank you for registering with our service!\n\n- The Team")
 

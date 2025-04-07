@@ -5,3 +5,6 @@ This project contains two microservices: User Management and Notification Servic
 ## Services
 - User Service
 - Notification Service
+
+## To Run these microservices
+- docker-compose up

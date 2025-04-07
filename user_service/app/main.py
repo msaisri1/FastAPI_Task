@@ -42,15 +42,6 @@ def custom_openapi():
 
 app.openapi = custom_openapi
 
-# Middleware (CORS)
-app.middleware(
-    CORSMiddleware,
-    # allow_origins=["*"],
-    # allow_creadentails = True,
-    # allow_methods=["*"],
-    # allow_headers=["*"],
-)
-
 # Include routes
 app.include_router(auth.router, prefix=API_PREFIX, tags=["auth"])
 app.include_router(users.router, prefix=API_PREFIX, tags=["users"])

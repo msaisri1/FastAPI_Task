@@ -5,7 +5,9 @@ from aio_pika import connect_robust, IncomingMessage
 # from app.core.config import settings
 from app.services.notification_handler import send_notification
 
-RABBITMQ_URL: str = os.getenv("RABBITMQ_URL", "amqp://guest:guest@localhost:5672")
+rabbitmq_url = os.getenv("RABBITMQ_HOST", "rabbitmq")
+
+RABBITMQ_URL: str = os.getenv("RABBITMQ_URL", f"amqp://guest:guest@{rabbitmq_url}:5672")
 QUEUE_NAME: str = os.getenv("QUEUE_NAME", "user_registered")
 
 async def on_message(message: IncomingMessage):
