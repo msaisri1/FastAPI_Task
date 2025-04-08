@@ -14,29 +14,34 @@ This project demonstrates a simple microservices architecture using **FastAPI**,
 - FastAPI for building lightweight REST APIs
 - Docker Compose to manage containers
 - Service-to-service communication over HTTP
-- Environment configuration using `.env` files
 
 ---
 
 ## Project Structure
 
 ```bash
-FastAPI_Task/
-│
-├── user/                    # User microservice
-│   ├── main.py              # FastAPI routes and startup logic
-│   ├── models.py            # Database models for users
-│   ├── database.py          # PostgreSQL connection config
-│   └── ...
-│
-├── notification/            # Notification microservice
-│   ├── main.py              # FastAPI routes and startup logic
-│   ├── models.py            # Database models for notifications
-│   ├── database.py          # PostgreSQL connection config
-│   └── ...
-│
-├── docker-compose.yml       # Defines both services and databases
-└── README.md                # Project documentation
+/FastAPI_task
+├── user_service
+│   ├── app/
+│   │   ├── api/
+│   │   ├── core/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── services/
+│   │   ├── db/
+│   │   ├── main.py
+│   ├── Dockerfile
+│   └── requirements.txt
+├── notification_service
+│   ├── app/
+│   │   ├── consumers/
+│   │   ├── core/
+│   │   ├── services/
+│   │   ├── main.py
+│   ├── Dockerfile
+│   └── requirements.txt
+├── docker-compose.yml
+└── README.md
 ```
 
 ---
